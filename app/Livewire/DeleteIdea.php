@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class DeleteIdea extends Component
 {
-    public $idea;
+    public Idea $idea;
 
     public function mount(Idea $idea)
     {
@@ -23,13 +23,8 @@ class DeleteIdea extends Component
         abort_if(auth()->guest() || auth()->user()->cannot('delete', $this->idea), Response::HTTP_FORBIDDEN);
 
         $this->idea->delete();
-        session()->flash('success_message', 'Idea was deleted successfully!');
 
-        return to_route('idea.index');
-    }
-
-    public function render()
-    {
-        return view('livewire.delete-idea');
+        return to_route('idea.index')
+            ->with('success_message', 'Idea was deleted successfully!');
     }
 }

@@ -1,7 +1,7 @@
 <div>
     <div class="filters flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-6">
         <div class="w-full md:w-1/3">
-            <select wire:model.live="category" name="category" id="category" class="w-full rounded-xl border-none px-4 py-2">
+            <select wire:model.live="category" id="category" class="w-full rounded-xl border-none px-4 py-2">
                 <option value="All Categories">All Categories</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->name }}">{{ $category->name }}</option>
@@ -9,7 +9,7 @@
             </select>
         </div>
         <div class="w-full md:w-1/3">
-            <select wire:model.live="filter" name="other_filters" id="other_filters" class="w-full rounded-xl border-none px-4 py-2">
+            <select wire:model.live="filter" id="other_filters" class="w-full rounded-xl border-none px-4 py-2">
                @foreach($filters as $filter)
                 <option value="{{ $filter }}">{{ $filter }}</option>
                 @endforeach
@@ -32,11 +32,7 @@
 
     <div class="ideas-container space-y-6 my-8">
         @forelse ($ideas as $idea)
-            <livewire:idea-index
-                :key="$idea->id"
-                :idea="$idea"
-                :votesCount="$idea->votes_count"
-            />
+            <livewire:idea-index :key="$idea->id" :$idea :votesCount="$idea->votes_count"/>
         @empty
             <div class="mx-auto w-70 mt-12">
                 <img src="{{ asset('img/no-ideas.svg') }}" alt="No Ideas" class="mx-auto mix-blend-luminosity">

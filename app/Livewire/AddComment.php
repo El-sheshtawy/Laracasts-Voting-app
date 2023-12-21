@@ -19,7 +19,7 @@ class AddComment extends Component
     #[Rule('required|min:2')]
     public string $body = '';
 
-    public function addComment()
+    public function save()
     {
         abort_if(auth()->guest(), Response::HTTP_FORBIDDEN);
 
@@ -29,7 +29,6 @@ class AddComment extends Component
             'idea_id' => $this->idea->id,
             'user_id' => auth()->id(),
             'body' => $this->body,
-            'status_id' => 1,
         ]);
 
         $this->reset('body');
@@ -37,10 +36,5 @@ class AddComment extends Component
         $this->dispatch('commentWasAdded', 'Comment was posted!');
 
         $this->idea->user->notify(new CommentAdded($comment));
-    }
-
-    public function render()
-    {
-        return view('livewire.add-comment');
     }
 }

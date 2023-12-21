@@ -3,7 +3,8 @@
     x-data="{ isOpen: false }"
     class="relative"
 >
-    <button @click=
+    <button
+        @click=
                 "isOpen = !isOpen
                 if (isOpen) {
                     $dispatch('getNotifications')
@@ -23,8 +24,8 @@
         @click.away="isOpen = false"
         @keydown.escape.window="isOpen = false"
     >
-        @if ($notifications->isNotEmpty() && ! $isLoading)
-            @foreach ($notifications as $notification)
+        @if ($this->notifications && ! $isLoading)
+            @foreach ($this->notifications as $notification)
                 <li>
                     <a
                         href="{{ route('idea.show', $notification->data['idea_slug']) }}"
@@ -46,14 +47,26 @@
                     </a>
                 </li>
             @endforeach
+                @if($notificationCount > 0)
             <li class="border-t border-gray-300 text-center">
                 <button
                     wire:click="markAllAsRead"
                     class="w-full block font-semibold hover:bg-gray-100 transition duration-150 ease-in px-5 py-4"
+                    x-on:click="isOpen = false"
                 >
                     Mark all as read
                 </button>
             </li>
+                @else
+                    <li class="border-t border-gray-300 text-center">
+                        <button
+                            class="w-full block font-semibold hover:bg-gray-100 transition duration-150 ease-in px-5 py-4"
+                            x-on:click="isOpen = false"
+                        >
+                            No notifications
+                        </button>
+                    </li>
+                @endif
         @elseif ($isLoading)
             @foreach (range(1,4) as $item)
                 <li class="animate-pulse flex items-center transition duration-150 ease-in px-5 py-3">

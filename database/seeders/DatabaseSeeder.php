@@ -12,11 +12,6 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
         User::factory()->create([
@@ -53,7 +48,10 @@ class DatabaseSeeder extends Seeder
 
         // Generate comments for ideas
         foreach (Idea::all() as $idea) {
-            Comment::factory(5)->existing()->create(['idea_id' => $idea->id]);
+            Comment::factory(5)->existing()
+                ->create([
+                    'idea_id' => $idea->id
+                ]);
         }
     }
 }

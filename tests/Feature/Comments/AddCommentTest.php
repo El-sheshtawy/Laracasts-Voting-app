@@ -55,7 +55,7 @@ class AddCommentTest extends TestCase
                'idea' => $idea
            ])
            ->set('body', '')
-           ->call('addComment')
+           ->call('save')
            ->assertHasErrors(['body'])
            ->assertSee('The body field is required');
     }
@@ -70,7 +70,7 @@ class AddCommentTest extends TestCase
                 'idea' => $idea
             ])
             ->set('body', 'a')
-            ->call('addComment')
+            ->call('save')
             ->assertHasErrors(['body'])
             ->assertSee('The body field must be at least 2 characters.');
     }
@@ -94,7 +94,7 @@ class AddCommentTest extends TestCase
             ->set('body', 'Body comment')
             ->set('idea_id', $idea->id)
             ->set('user_id', $user->id)
-            ->call('addComment')
+            ->call('save')
             ->assertDispatched('commentWasAdded');
 
         Notification::assertSentTo(

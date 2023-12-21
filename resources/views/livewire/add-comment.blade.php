@@ -55,9 +55,9 @@
         @keydown.escape.window="isOpen = false"
     >
         @auth
-            <form wire:submit.prevent="addComment" method="POST" class="space-y-4 px-4 py-6" x-on:add-comment.window="open = false">
+            <form wire:submit.prevent="save" method="POST" class="space-y-4 px-4 py-6" x-on:add-comment.window="open = false">
                 <div>
-                    <textarea x-ref="comment" wire:model="body" name="post_comment" id="post_comment" cols="30" rows="4" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2" placeholder="Go ahead, don't be shy. Share your thoughts..." required></textarea>
+                    <textarea x-ref="body" wire:model="body" id="post_comment" cols="30" rows="4" class="w-full text-sm bg-gray-100 rounded-xl placeholder-gray-900 border-none px-4 py-2" placeholder="Go ahead, don't be shy. Share your thoughts..." required></textarea>
 
                     @error('body')
                     <p class="text-red text-xs mt-1">{{ $message }}</p>
@@ -66,6 +66,7 @@
 
                 <div class="flex flex-col md:flex-row items-center md:space-x-3">
                     <button
+                        @click="isOpen = false"
                         type="submit"
                         class="flex items-center justify-center h-11 w-full md:w-1/2 text-sm bg-blue text-white font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3"
                     >

@@ -26,9 +26,4 @@ class DeleteComment extends Component
 
         $this->dispatch('commentWasDeleted', 'Comment was deleted!');
     }
-
-    public function render()
-    {
-        return view('livewire.delete-comment');
-    }
 }

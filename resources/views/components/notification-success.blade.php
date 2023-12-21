@@ -22,10 +22,6 @@
         @if ($redirect)
             $nextTick(() => showNotification(messageToDisplay))
         @else
-            Livewire.on('ideaWasUpdated', message => {
-                isError = false
-                showNotification(message)
-            })
 
             Livewire.on('ideaWasMarkedAsSpam', message => {
                 isError = false

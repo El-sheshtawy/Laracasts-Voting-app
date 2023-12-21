@@ -24,22 +24,13 @@ class EditComment extends Component
         $this->dispatch('editCommentWasSet');
     }
 
-    public function updateComment(): void
+    public function updateComment()
     {
-        if (auth()->guest() || auth()->user()->cannot('update', $this->comment)) {
-            abort(Response::HTTP_FORBIDDEN);
-        }
+        abort_if(auth()->guest() || auth()->user()->cannot('update', $this->comment) , Response::HTTP_FORBIDDEN);
 
         $this->validate();
-        $this->comment->update([
-            'body' => $this->body,
-        ]);
+        $this->comment->update($this->only('body'));
 
         $this->dispatch('commentWasUpdated', 'Comment was updated!');
-    }
-
-    public function render()
-    {
-        return view('livewire.edit-comment');
     }
 }

@@ -23,14 +23,8 @@ class MarkCommentAsSpam extends Component
     {
         abort_if(auth()->guest(), Response::HTTP_FORBIDDEN );
 
-        $this->comment->spam_reports++;
-        $this->comment->save();
+        $this->comment->increment('spam_reports');
 
         $this->dispatch('commentWasMarkedAsSpam', 'Comment was marked as spam!');
-    }
-
-    public function render()
-    {
-        return view('livewire.mark-comment-as-spam');
     }
 }

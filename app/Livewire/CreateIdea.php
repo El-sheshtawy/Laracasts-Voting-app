@@ -17,34 +17,26 @@ class CreateIdea extends Component
     public $title = '';
 
     #[Rule('required|integer|exists:categories,id')]
-    public $category;
+    public $category_id;
 
     #[Rule('required|min:4')]
     public $description = '';
 
-
-    public function createIdea()
+    public function save()
     {
-        abort_if(!auth()->check(), Response::HTTP_FORBIDDEN);
+        abort_if(auth()->guest(), Response::HTTP_FORBIDDEN);
 
         $this->validate();
-        Idea::create([
-            'user_id' => auth()->id(),
-            'category_id' => $this->category,
-            'status_id' => 1,
-            'title' => $this->title,
-            'description' => $this->description,
-        ]);
-        $this->reset();
+        auth()->user()->ideas()->create($this->only('category_id', 'title', 'description'));
 
-        session()->flash('success_message', 'Idea was added successfully!');
-        return redirect()->route('idea.index');
+        return redirect()->route('idea.index')
+            ->with('success_message', 'Idea was added successfully!');
     }
 
     public function render()
     {
         return view('livewire.create-idea', [
-            'categories' => Category::select('id', 'name')->get(),
+            'categories' => Category::query()->select('id', 'name')->get(),
         ]);
     }
 }

@@ -18,13 +18,9 @@ class MarkIdeaAsSpam extends Component
     public function markAsSpam()
     {
         abort_if(auth()->guest(), Response::HTTP_FORBIDDEN);
-        $this->idea->spam_reports++;
-        $this->idea->save();
-        $this->dispatch('ideaWasMarkedAsSpam', 'Idea was marked as spam!');
-    }
 
-    public function render()
-    {
-        return view('livewire.mark-idea-as-spam');
+        $this->idea->increment('spam_reports');
+
+        $this->dispatch('ideaWasMarkedAsSpam', 'Idea was marked as spam!');
     }
 }

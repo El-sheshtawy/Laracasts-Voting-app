@@ -49,10 +49,10 @@ class CreateIdeaTest extends TestCase
         Livewire::actingAs(User::factory()->create())
             ->test(CreateIdea::class)
             ->set('title', '')
-            ->set('category', '')
+            ->set('category_id', '')
             ->set('description', '')
-            ->call('createIdea')
-            ->assertHasErrors(['title', 'category', 'description'])
+            ->call('save')
+            ->assertHasErrors(['title', 'category_id', 'description'])
             ->assertSee('The title field is required');
     }
 
@@ -69,9 +69,9 @@ class CreateIdeaTest extends TestCase
         Livewire::actingAs($user)
             ->test(CreateIdea::class)
             ->set('title', 'My First Idea')
-            ->set('category', $categoryOne->id)
+            ->set('category_id', $categoryOne->id)
             ->set('description', 'This is my first idea')
-            ->call('createIdea')
+            ->call('save')
             ->assertRedirect('/');
 
         $response = $this->actingAs($user)->get(route('idea.index'));
@@ -97,9 +97,9 @@ class CreateIdeaTest extends TestCase
         Livewire::actingAs($user)
             ->test(CreateIdea::class)
             ->set('title', 'My First Idea')
-            ->set('category', $categoryOne->id)
+            ->set('category_id', $categoryOne->id)
             ->set('description', 'This is my first idea')
-            ->call('createIdea')
+            ->call('save')
             ->assertRedirect('/');
 
         $this->assertDatabaseHas('ideas', [
@@ -110,9 +110,9 @@ class CreateIdeaTest extends TestCase
         Livewire::actingAs($user)
             ->test(CreateIdea::class)
             ->set('title', 'My First Idea')
-            ->set('category', $categoryOne->id)
+            ->set('category_id', $categoryOne->id)
             ->set('description', 'This is my first idea')
-            ->call('createIdea')
+            ->call('save')
             ->assertRedirect('/');
 
         $this->assertDatabaseHas('ideas', [

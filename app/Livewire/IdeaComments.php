@@ -21,6 +21,15 @@ class IdeaComments extends Component
         $this->idea->load('comments');
     }
 
+    #[Computed]
+    public function comments()
+    {
+        return $this->idea->comments()
+            ->select(['id', 'idea_id', 'user_id', 'body', 'is_status_update', 'status_id', 'created_at'])
+            ->with(['idea:id,user_id', 'status:id,name', 'user:id,name,email'])
+            ->paginate();
+    }
+
     #[On('commentWasAdded')]
     public function commentWasAdded()
     {
@@ -40,18 +49,5 @@ class IdeaComments extends Component
     {
         $this->idea->refresh();
         $this->goToPage($this->idea->comments()->paginate()->lastPage());
-    }
-
-    #[Computed]
-    public function comments()
-    {
-        return $this->idea->comments()
-            ->with(['idea', 'status', 'user'])
-            ->paginate();
-    }
-
-    public function render()
-    {
-        return view('livewire.idea-comments');
     }
 }

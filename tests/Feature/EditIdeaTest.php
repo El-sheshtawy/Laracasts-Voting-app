@@ -63,10 +63,10 @@ class EditIdeaTest extends TestCase
                 'idea' => $idea
             ])
             ->set('title', '')
-            ->set('category', '')
+            ->set('category_id', '')
             ->set('description', '')
-            ->call('updateIdea')
-            ->assertHasErrors(['title', 'category', 'description'])
+            ->call('update')
+            ->assertHasErrors(['title', 'category_id', 'description'])
             ->assertSee('The title field is required');
     }
 
@@ -86,11 +86,11 @@ class EditIdeaTest extends TestCase
                 'idea' => $idea
             ])
             ->set('title', 'Allam Updated')
-            ->set('category', $categoryTwo->id)
+            ->set('category_id', $categoryTwo->id)
             ->set('description', 'this is the allam updated title')
-            ->call('updateIdea')
+            ->call('update')
             ->assertSet('title', 'Allam Updated')
-            ->assertSet('category', $categoryTwo->id);
+            ->assertSet('category_id', $categoryTwo->id);
 
         $this->assertDatabaseHas('ideas', [
             'title' => 'Allam Updated',
@@ -145,9 +145,9 @@ class EditIdeaTest extends TestCase
                 'idea' => $idea
             ])
             ->set('title', 'Allam Updated')
-            ->set('category', $categoryTwo->id)
+            ->set('category_id', $categoryTwo->id)
             ->set('description', 'this is the allam updated title')
-            ->call('updateIdea')
+            ->call('update')
             ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertDatabaseMissing('ideas', [
@@ -175,9 +175,9 @@ class EditIdeaTest extends TestCase
                 'idea' => $idea
             ])
             ->set('title', 'Allam Updated')
-            ->set('category', $categoryTwo->id)
+            ->set('category_id', $categoryTwo->id)
             ->set('description', 'this is the allam updated title')
-            ->call('updateIdea')
+            ->call('update')
             ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertDatabaseMissing('ideas', [

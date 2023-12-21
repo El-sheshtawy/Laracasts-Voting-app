@@ -18,6 +18,8 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+{{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+
     @vite(['resources/js/app.js'])
     @livewireStyles
 </head>
@@ -29,16 +31,9 @@
             <div class="px-6 py-4">
                 @auth
                     <div class="flex items-center space-x-4">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                        this.closest('form').submit();">
+                            <a href="{{ route('logout') }}">
                                 {{ __('Log out') }}
                             </a>
-                        </form>
-
                         <livewire:comment-notifications />
                     </div>
                 @else

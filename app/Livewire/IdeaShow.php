@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Exceptions\DuplicateVoteException;
 use App\Exceptions\VoteNotFoundException;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\Idea;
 use App\Traits\WithAuthRedirects;
 use Livewire\Attributes\On;
@@ -14,12 +15,12 @@ class IdeaShow extends Component
 {
     use WithAuthRedirects;
 
-    public  $idea;
-    public  int $votesCount = 0 ;
+    public Idea $idea;
+    public int $votesCount = 0 ;
     public int $commentsCount = 0;
-    public  $hasVoted;
+    public bool $hasVoted;
 
-    public function mount(Idea $idea, $votesCount, $commentsCount)
+    public function mount(Idea $idea, int $votesCount, int $commentsCount)
     {
         $this->idea = $idea;
         $this->votesCount = $votesCount;
@@ -52,7 +53,6 @@ class IdeaShow extends Component
         }
     }
 
-
     #[On('statusWasUpdated')]
     public function statusWasUpdated()
     {
@@ -60,8 +60,8 @@ class IdeaShow extends Component
         $this->idea->refresh();
     }
 
-    #[On('ideaWasUpdated')]
-    public function ideaWasUpdated()
+    #[On('statusWasUpdatedError')]
+    public function statusWasUpdatedError()
     {
         $this->idea->refresh();
     }
@@ -88,16 +88,5 @@ class IdeaShow extends Component
     public function commentWasDeleted()
     {
         $this->commentsCount--;
-    }
-
-    #[On('statusWasUpdatedError')]
-    public function statusWasUpdatedError()
-    {
-        $this->idea->refresh();
-    }
-
-    public function render()
-    {
-        return view('livewire.idea-show');
     }
 }

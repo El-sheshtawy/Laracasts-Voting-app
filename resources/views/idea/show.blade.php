@@ -11,15 +11,11 @@
         </a>
     </div>
 
-    <livewire:idea-show
-        :idea="$idea"
-        :votesCount="$votesCount"
-        :commentsCount="$commentsCount"
-    />
+    <livewire:idea-show :$idea :$votesCount :$commentsCount />
 
-    <livewire:idea-comments :idea="$idea" />
+    <livewire:idea-comments :$idea />
 
     <x-notification-success />
 
-    <x-modals-container :idea="$idea" />
+    <x-modals-container :$idea />
 </x-app-layout>

@@ -32,9 +32,4 @@ class IdeaComment extends Component
     {
         $this->comment->refresh();
     }
-
-    public function render()
-    {
-        return view('livewire.idea-comment');
-    }
 }

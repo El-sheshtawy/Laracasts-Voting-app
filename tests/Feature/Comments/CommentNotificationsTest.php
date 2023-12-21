@@ -55,12 +55,12 @@ class CommentNotificationsTest extends TestCase
         Livewire::actingAs($userACommenting)
             ->test(AddComment::class, [ 'idea' => $idea, ])
             ->set('body', 'This is the first comment')
-            ->call('addComment');
+            ->call('save');
 
         Livewire::actingAs($userBCommenting)
             ->test(AddComment::class, [ 'idea' => $idea, ])
             ->set('body', 'This is the second comment')
-            ->call('addComment');
+            ->call('save');
 
         DatabaseNotification::first()->update(['created_at' => now()->subMinute()]);
 
@@ -79,7 +79,7 @@ class CommentNotificationsTest extends TestCase
         ]);
 
         $userACommenting = User::factory()->create();
-        $threshold = CommentNotifications::NOTIFICATION_THRESHOLD;
+        $threshold = CommentNotifications::MAX_NOTIFICATION_COUNT;
 
         foreach (range(1, $threshold + 1) as $item) {
             Livewire::actingAs($userACommenting)
@@ -87,7 +87,7 @@ class CommentNotificationsTest extends TestCase
                     'idea' => $idea,
                 ])
                 ->set('body', 'This is the first comment')
-                ->call('addComment');
+                ->call('save');
         }
 
         Livewire::actingAs($user)
@@ -138,12 +138,12 @@ class CommentNotificationsTest extends TestCase
         Livewire::actingAs($userACommenting)
             ->test(AddComment::class, [ 'idea' => $idea, ])
             ->set('body', 'This is the first comment')
-            ->call('addComment');
+            ->call('save');
 
         Livewire::actingAs($userBCommenting)
             ->test(AddComment::class, [ 'idea' => $idea, ])
             ->set('body', 'This is the second comment')
-            ->call('addComment');
+            ->call('save');
 
         Livewire::actingAs($user)
             ->test(CommentNotifications::class)
@@ -169,7 +169,7 @@ class CommentNotificationsTest extends TestCase
         Livewire::actingAs($userACommenting)
             ->test(AddComment::class, [ 'idea' => $idea, ])
             ->set('body', 'This is the first comment')
-            ->call('addComment');
+            ->call('save');
 
         $idea->delete();
 
@@ -193,7 +193,7 @@ class CommentNotificationsTest extends TestCase
         Livewire::actingAs($userACommenting)
             ->test(AddComment::class, [ 'idea' => $idea, ])
             ->set('body', 'This is the first comment')
-            ->call('addComment');
+            ->call('save');
 
         $idea->comments()->delete();
 

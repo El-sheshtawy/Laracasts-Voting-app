@@ -8,7 +8,7 @@
 Comment : {{ $comment->body }}
 
 <x-mail::button :url="route('idea.show', $comment->idea)">
-View idea
+View your idea
 </x-mail::button>
 
 Thanks,<br>

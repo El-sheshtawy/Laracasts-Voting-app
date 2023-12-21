@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Exceptions\DuplicateVoteException;
 use App\Exceptions\VoteNotFoundException;
 use App\Models\Idea;
+use App\Models\Vote;
 use App\Traits\WithAuthRedirects;
 use Livewire\Component;
 
@@ -12,8 +13,8 @@ class IdeaIndex extends Component
 {
     use WithAuthRedirects;
 
-    public $idea;
-    public $votesCount;
+    public Idea $idea;
+    public int $votesCount = 0;
     public $hasVoted;
 
     public function mount(Idea $idea, $votesCount)
@@ -46,10 +47,5 @@ class IdeaIndex extends Component
                 $this->hasVoted = true;
             }
         }
-    }
-
-    public function render()
-    {
-        return view('livewire.idea-index');
     }
 }

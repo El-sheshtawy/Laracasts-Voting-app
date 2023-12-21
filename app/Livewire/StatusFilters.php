@@ -3,12 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\Status;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
 class StatusFilters extends Component
 {
-    public $status;
+    public ?string $status;
     public $statusCount;
 
     public function mount()
@@ -33,13 +34,9 @@ class StatusFilters extends Component
         }
     }
 
-    public function render()
-    {
-        return view('livewire.status-filters');
-    }
-
     public function getPreviousRouteName()
     {
-        return app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+        return Route::getRoutes()->match(Request::create(url()->previous()))->getName();
+        //    return app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
     }
 }

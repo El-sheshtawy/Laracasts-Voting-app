@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class MarkIdeaAsNotSpam extends Component
 {
-    public $idea;
+    public Idea $idea;
 
     public function mount(Idea $idea)
     {
@@ -20,10 +20,5 @@ class MarkIdeaAsNotSpam extends Component
         abort_if(auth()->guest() || ! auth()->user()->isAdmin(), Response::HTTP_FORBIDDEN);
         $this->idea->update(['spam_reports' => 0]);
         $this->dispatch('ideaWasMarkedAsNotSpam', 'Spam Counter was reset!');
-    }
-
-    public function render()
-    {
-        return view('livewire.mark-idea-as-not-spam');
     }
 }

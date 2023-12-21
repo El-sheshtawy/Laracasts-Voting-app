@@ -23,15 +23,8 @@ class MarkCommentAsNotSpam extends Component
     {
         abort_if(auth()->guest() || ! auth()->user()->isAdmin(), Response::HTTP_FORBIDDEN );
 
-        $this->comment->update([
-            'spam_reports' => 0,
-        ]);
+        $this->comment->update(['spam_reports' => 0]);
 
         $this->dispatch('commentWasMarkedAsNotSpam', 'Comment spam counter was reset!');
-    }
-
-    public function render()
-    {
-        return view('livewire.mark-comment-as-not-spam');
     }
 }

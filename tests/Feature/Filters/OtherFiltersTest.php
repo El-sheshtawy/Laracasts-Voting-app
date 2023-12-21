@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Idea;
 use App\Models\User;
 use App\Models\Vote;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;

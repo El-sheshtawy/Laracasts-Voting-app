@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Idea;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-
 
 class IdeaController extends Controller
 {
@@ -17,7 +15,7 @@ class IdeaController extends Controller
 
     public function show(Idea $idea)
     {
-        $idea->loadCount('comments', 'user', 'votes');
+        $idea->loadCount('comments', 'votes');
 
         $commentsCount = $idea->comments_count;
         $votesCount = $idea->votes_count;

@@ -10,12 +10,12 @@ return new class extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->string('slug')->nullable();
             $table->text('description');
-            $table->foreignId('category_id')->constrained();
-            $table->foreignId('status_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
+            $table->foreignId('status_id')->default(1)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
             $table->integer('spam_reports')->default(0);
             $table->timestamps();
         });
